@@ -3,9 +3,9 @@ from sqlalchemy.future import select
 from sqlalchemy import delete, asc
 from models.book_model import Book
 from uuid import UUID
+from typing import Optional
 
-async def get_all(db: AsyncSession, limit: int, cursor: UUID = None, status=None, author=None):
-    # Сортуємо за ID, щоб курсор працював коректно
+async def get_all(db: AsyncSession, limit: int, cursor: Optional[UUID] = None, status=None, author=None):
     query = select(Book).order_by(asc(Book.id)).limit(limit)
     
     if cursor:

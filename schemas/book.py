@@ -1,7 +1,11 @@
 from pydantic import BaseModel, Field
 from uuid import UUID
-from typing import Optional
-from models.book_model import BookStatus
+from typing import List, Optional
+import enum
+
+class BookStatus(str, enum.Enum):
+    available = "available"
+    borrowed = "borrowed"
 
 class BookCreate(BaseModel):
     title: str = Field(min_length=1)
@@ -20,3 +24,8 @@ class BookResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class BookPaginationResponse(BaseModel):
+    items: List[BookResponse]
+    next_cursor: Optional[UUID] = None
+    has_more: bool
